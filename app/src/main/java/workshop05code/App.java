@@ -56,20 +56,21 @@ public class App {
             String line;
             int i = 1;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                // System.out.println(line);
                 String pattern = "^[a-z]{4}$";
                 if(line.matches(pattern)){
                     wordleDatabaseConnection.addValidWord(i, line);
+                    logger.log(Level.INFO,line);
                     i++;
                 } else {
+                    logger.log(Level.SEVERE,"There is an invalid word in the database, clean up ASAP");
                     System.out.println("Ignoring invalid input");
                 }
 
             }
 
         } catch (IOException e) {
-            System.out.println("Not able to load . Sorry!");
-            System.out.println(e.getMessage());
+            logger.log(Level.WARNING,"Not able to load. Sorry!", e);
             return;
         }
 
@@ -80,6 +81,7 @@ public class App {
             String guess = scanner.nextLine();
             String pattern = "^[a-z]{4}$";
             while(!guess.matches(pattern)){
+                logger.log(Level.SEVERE,"The user entered an invalid word");
                 System.out.println("Invalid Word: Please enter a 4 letter word that only has lowercase letters");
                 guess = scanner.nextLine();
             }
@@ -96,6 +98,7 @@ public class App {
                 guess = scanner.nextLine();
             }
         } catch (NoSuchElementException | IllegalStateException e) {
+            logger.log(Level.WARNING, e.getMessage(), e);
             e.printStackTrace();
         }
 
