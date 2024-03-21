@@ -72,7 +72,11 @@ public class App {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("Enter a 4 letter word for a guess or q to quit: ");
             String guess = scanner.nextLine();
-
+            String pattern = "^[a-z]{4}$";
+            while(!guess.matches(pattern)){
+                System.out.println("Invalid Word: Please enter a 4 letter word that only has lowercase letters");
+                guess = scanner.nextLine();
+            }
             while (!guess.equals("q")) {
                 System.out.println("You've guessed '" + guess+"'.");
 
